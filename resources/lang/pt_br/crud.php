@@ -161,6 +161,7 @@ return [
      * MISCELANEOUS
      */
     'tab.basic' => 'Dados básicos',
+    'tab.access' => 'Acesso',
 
     /**
      * Genereic Fields
@@ -168,6 +169,18 @@ return [
     'Admin' => 'Admin',
     'Name' => 'Nome',
     'name' => 'nome',
+    'Status' => 'Status',
+    'status' => 'status',
+    'Phone' => 'Telefone',
+    'phone' => 'telefone',
+    'Email' => 'E-mail',
+    'email' => 'e-mail',
+    'Ra' => 'Registro do Aluno',
+    'ra' => 'registro do aluno',
+    'Password' => 'Senha',
+    'password' => 'senha',
+    'University' => 'Universidade',
+    'university' => 'universidade',
 
     /**
      * Entities

@@ -19,7 +19,7 @@ class Student extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['name', 'university_id', 'phone', 'email', 'status','ra', 'password'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -28,6 +28,10 @@ class Student extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function University()
+    {
+        return $this->belongsTo('App\Models\University', 'university_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

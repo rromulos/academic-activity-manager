@@ -18,9 +18,9 @@ class CreateStudentsTable extends Migration
             $table->integer('university_id')->unsigned()->comment = "University Primary Key";
             $table->string('email',100)->nullable()->comment = "Email of the student";
             $table->string('phone',20)->nullable()->comment = "Phone of the student";
-            $table->string('status',20)->default('NEW')->comment = "Status of the student";
-            $table->string('ra',20)->comment = "Student unique ID provided by university";
-            $table->string('password',30)->comment = "Password provided by university";
+            $table->string('status',20)->default('OK')->comment = "Status of the student";
+            $table->string('ra',20)->nullable()->comment = "Student unique ID provided by university";
+            $table->string('password',30)->nullable()->comment = "Password provided by university";
             $table->timestamps();
 
             $table->foreign('university_id')->references('id')->on('universities');

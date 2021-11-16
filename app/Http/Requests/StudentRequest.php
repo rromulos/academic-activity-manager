@@ -26,7 +26,11 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name'   => 'required|unique:students,name|max:50',
+            'email'    => 'unique:students,email|max:100',
+            'phone'    => 'unique:students,phone|max:20',
+            'ra'       => 'unique:students,ra|max:20',
+            'password' => 'max:100',
         ];
     }
 
@@ -50,7 +54,21 @@ class StudentRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name.required' => trans('backpack::validations.students.name.required'),
+            'name.max' => trans('backpack::validations.students.name.max'),
+            'name.unique' => trans('backpack::validations.students.name.unique'),
+
+            'email.max' => trans('backpack::validations.students.email.max'),
+            'email.unique' => trans('backpack::validations.students.email.unique'),
+
+            'phone.max' => trans('backpack::validations.students.phone.max'),
+            'phone.unique' => trans('backpack::validations.students.phone.unique'),
+
+            'ra.max' => trans('backpack::validations.students.ra.max'),
+            'ra.unique' => trans('backpack::validations.students.ra.unique'),
+
+            'password.max' => trans('backpack::validations.students.password.max'),
+            'password.unique' => trans('backpack::validations.students.password.unique'),
         ];
     }
 }

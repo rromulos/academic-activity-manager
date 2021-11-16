@@ -26,7 +26,7 @@ class UniversityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|unique:universities,name|max:50',
+            'name'     => 'required|unique:students,name|max:50',
         ];
     }
 
@@ -50,9 +50,9 @@ class UniversityRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => trans('backpack::validations.universities.name.required'),
-            'name.max' => trans('backpack::validations.universities.name.max'),
-            'name.unique' => trans('backpack::validations.universities.name.unique'),
+            'name.required' => trans('backpack::validations.students.name.required'),
+            'name.max' => trans('backpack::validations.students.name.max'),
+            'name.unique' => trans('backpack::validations.students.name.unique'),
         ];
     }
 }

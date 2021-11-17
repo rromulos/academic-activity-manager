@@ -26,7 +26,8 @@ class ActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'price' => "nullable|regex:/^\d+(\.\d{1,2})?$/",
+            'delivery_date' => 'required:activities,delivery_date',
         ];
     }
 
@@ -50,7 +51,8 @@ class ActivityRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'price.regex'    => 'A formatação do campo PREÇO está incorreta, exemplo => 50.25',
+            'delivery_date.required' => 'Campo DATA DE ENTRADA precisa ser preenchido',
         ];
     }
 }

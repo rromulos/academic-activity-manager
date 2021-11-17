@@ -19,7 +19,7 @@ class Activity extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['student_id', 'subject_id', 'type', 'delivery_date', 'observation', 'price', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -28,6 +28,15 @@ class Activity extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function Student()
+    {
+        return $this->belongsTo('App\Models\Student', 'student_id');
+    }
+
+    public function Subject()
+    {
+        return $this->belongsTo('App\Models\Subject', 'subject_id');
+    }
 
     /*
     |--------------------------------------------------------------------------

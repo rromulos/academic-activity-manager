@@ -167,6 +167,7 @@ return [
      * Genereic Fields
      */
     'Admin' => 'Admin',
+    'Id' => 'ID',
     'Name' => 'Nome',
     'name' => 'nome',
     'Status' => 'Status',
@@ -181,6 +182,9 @@ return [
     'password' => 'senha',
     'University' => 'Universidade',
     'university' => 'universidade',
+    'Type' => 'Tipo',
+    'Observation' => 'Observação',
+    'Price' => 'Preço',
 
     /**
      * Entities

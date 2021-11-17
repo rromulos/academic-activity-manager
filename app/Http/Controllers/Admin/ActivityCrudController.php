@@ -164,6 +164,18 @@ class ActivityCrudController extends CrudController
         ],);
 
         CRUD::addField([
+            'name' => "delivery_date",
+            'label' => trans('backpack::crud.DeliveryDate'),
+            'type' => "date",
+            'hint' => trans('backpack::hints.activity.deliverydate'),
+            'attributes' => [
+                'placeholder' => trans('backpack::hints.activity.deliverydate')
+            ],
+            'tab' => trans('backpack::crud.tab.basic'),
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+
+        CRUD::addField([
             'name'        => 'status',
             'label'       => trans('backpack::crud.Status'),
             'type'        => 'radio',
@@ -178,6 +190,7 @@ class ActivityCrudController extends CrudController
             ],
             'allows_null' => false,
             'default'     => 'AGUARDANDO',
+            'wrapper' => ['class' => 'form-group col-md-4'],
         ]);
 
         CRUD::addField([

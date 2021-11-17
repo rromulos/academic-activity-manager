@@ -15,4 +15,5 @@ return [
     'activity.price' => 'Preço cobrado na atividade',
     'activity.status' => 'Status da atividade',
     'activity.observation' => 'Observação da atividade',
+    'activity.deliverydate' => 'Data de entrega da atividade',
 ];

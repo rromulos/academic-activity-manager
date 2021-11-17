@@ -185,6 +185,7 @@ return [
     'Type' => 'Tipo',
     'Observation' => 'Observação',
     'Price' => 'Preço',
+    'DeliveryDate' => 'Data de entrega',
 
     /**
      * Entities

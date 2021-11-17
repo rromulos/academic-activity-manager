@@ -207,7 +207,7 @@ return [
     'Activities' => 'Atividades',
     'Activitiy' => 'Atividade',
     'activities' => 'atividades',
-    'activitie' => 'atividade',
+    'activity' => 'atividade',
 
     'Charges' => 'Cobranças',
     'Charge' => 'Cobrança',

@@ -9,4 +9,10 @@ return [
     'students.ra' => 'Registro do aluno',
     'students.password' => 'Senha de acesso',
     'students.university' => 'Selecione a universidade',
+    'activity.type' => 'Tipo da atividade',
+    'activity.student_id' => 'Nome do estudante',
+    'activity.subject_id' => 'Nome da disciplina',
+    'activity.price' => 'Preço cobrado na atividade',
+    'activity.status' => 'Status da atividade',
+    'activity.observation' => 'Observação da atividade',
 ];

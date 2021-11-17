@@ -105,13 +105,91 @@ class ActivityCrudController extends CrudController
     {
         CRUD::setValidation(ActivityRequest::class);
 
+        CRUD::addField([
+            'name'        => 'type',
+            'label'       => trans('backpack::crud.Type'),
+            'type'        => 'select2_from_array',
+            'hint' => trans('backpack::hints.activity.type'),
+            'attributes' => [
+                'placeholder' => trans('backpack::hints.activity.name')
+            ],
+            'tab' => trans('backpack::crud.tab.basic'),
+            'options'     => [
+                'ATIVIDADE' => 'ATIVIDADE',
+                'MAPA' => 'MAPA',
+                'SCG' => 'SCG'
+            ],
+            'allows_null' => false,
+            //'default'     => 'one',
+        ]);
 
+        CRUD::addField([
+            'name'      => 'student_id',
+            'tab' => trans('backpack::crud.tab.basic'),
+            'label'=> trans('backpack::crud.Student'),
+            'prefix' => '<i class="fas fa-list-ul"></i>',
+            'hint' => trans('backpack::hints.activity.student'),
+            'type'      => 'select2',
+            'entity'    => 'Student',
+            'attribute' => 'name',
+            'model'     => "App\Models\Student",
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number']));
-         */
+        CRUD::addField([
+            'name'      => 'subject_id',
+            'tab' => trans('backpack::crud.tab.basic'),
+            'label'=> trans('backpack::crud.Subject'),
+            'prefix' => '<i class="fas fa-list-ul"></i>',
+            'hint' => trans('backpack::hints.activity.subject'),
+            'type'      => 'select2',
+            'entity'    => 'Subject',
+            'attribute' => 'name',
+            'model'     => "App\Models\Subject",
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+
+        CRUD::addField([   // Number
+            'name' => 'price',
+            'label' => trans('backpack::crud.Price'),
+            'type' => 'number',
+            'tab' => trans('backpack::crud.tab.basic'),
+            'hint' => trans('backpack::hints.activity.price'),
+
+            // optionals
+            'attributes' => ["step" => "any"], // allow decimals
+            'prefix'     => "$",
+            // 'suffix'     => ".00",
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ],);
+
+        CRUD::addField([
+            'name'        => 'status',
+            'label'       => trans('backpack::crud.Status'),
+            'type'        => 'radio',
+            'hint' => trans('backpack::hints.activity.status'),
+            'attributes' => [
+                'placeholder' => trans('backpack::hints.activity.status')
+            ],
+            'tab' => trans('backpack::crud.tab.basic'),
+            'options'     => [
+                'AGUARDANDO' => 'AGUARDANDO',
+                'EM_ANDAMENTO' => 'EM ANDAMENTO',
+            ],
+            'allows_null' => false,
+            'default'     => 'AGUARDANDO',
+        ]);
+
+        CRUD::addField([
+            'name'  => 'observation',
+            'label' => trans('backpack::crud.Observation'),
+            'type'  => 'textarea',
+            'hint' => trans('backpack::hints.activity.observation'),
+            'attributes' => [
+                'placeholder' => trans('backpack::hints.activity.observation')
+            ],
+            'tab' => trans('backpack::crud.tab.basic'),
+        ],);
     }
 
     /**

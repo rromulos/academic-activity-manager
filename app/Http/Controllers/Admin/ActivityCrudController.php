@@ -29,6 +29,7 @@ class ActivityCrudController extends CrudController
         CRUD::setModel(\App\Models\Activity::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/activity');
         CRUD::setEntityNameStrings('activity', 'activities');
+        CRUD::addButtonFromView('line', 'activity_options', 'activities.activity_options', 'beginning');
     }
 
     /**
@@ -39,6 +40,10 @@ class ActivityCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        CRUD::removeButton('show');
+        CRUD::removeButton('delete');
+        CRUD::removeButton('update');
+
         CRUD::addColumn([
             'name'  => 'id',
             'label' => trans('backpack::crud.Id'),

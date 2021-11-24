@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateChargesTable extends Migration
+class CreateBillingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateChargesTable extends Migration
      */
     public function up()
     {
-        Schema::create('charges', function (Blueprint $table) {
+        Schema::create('billings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('activity_id')->unsigned()->comment = "";
             $table->string('status',20)->default(config('status.status.AGUARDANDO'));
@@ -28,6 +28,6 @@ class CreateChargesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('charges');
+        Schema::dropIfExists('billings');
     }
 }

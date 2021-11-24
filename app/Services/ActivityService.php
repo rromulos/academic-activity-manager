@@ -4,23 +4,23 @@ namespace App\Services;
 
 use App\Services\Interfaces\ActivityRepositoryInterface;
 use App\Services\Interfaces\ActivityServiceInterface;
-use App\Services\Interfaces\ChargeServiceInterface;
+use App\Services\Interfaces\BillingServiceInterface;
 use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class ActivityService implements ActivityServiceInterface
 {
 
-    private $chargeService;
+    private $billingService;
     private $activityRepository;
 
     public const ACTIVITY_CANNOT_BE_FINISHED_INVALID_STATUS = 'ACTIVITY_CANNOT_BE_FINISHED_INVALID_STATUS';
     public const ACTIVITY_FINISHED = 'ACTIVITY_FINISHED';
 
-    public function __construct(ChargeServiceInterface $chargeService,
+    public function __construct(BillingServiceInterface $billingService,
                                 ActivityRepositoryInterface $activityRepository)
     {
-        $this->chargeService = $chargeService;
+        $this->billingService = $billingService;
         $this->activityRepository = $activityRepository;
     }
 
@@ -38,7 +38,7 @@ class ActivityService implements ActivityServiceInterface
             $activity = $this->activityRepository->getById($id);
             $activity->status = config('status.activityStatus.FINISHED');
             $activity->save();
-            $this->chargeService->generateCharge($id);
+            $this->billingService->generateCharge($id);
             $result->status = config('status.status.OK');
             $result->code = self::ACTIVITY_FINISHED;
             Log::info(__METHOD__." activity finished");
@@ -66,5 +66,17 @@ class ActivityService implements ActivityServiceInterface
         }
         Log::debug(__METHOD__." returning false");
         return false;
+    }
+
+    /**
+     * Set activity Status
+     *
+     * @param $id
+     * @param $status
+     * @return stdClass
+     */
+    public function setStatus($id, $status) :stdClass
+    {
+        // TODO: Implement setStatus() method.
     }
 }

@@ -2,6 +2,6 @@
 
 namespace App\Services\Interfaces;
 
-interface ChargeServiceInterface{
+interface BillingServiceInterface{
     public function generateCharge($activityId);
 }

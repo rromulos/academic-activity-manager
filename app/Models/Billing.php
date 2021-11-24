@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Charge extends Model
+class Billing extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Charge extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'charges';
+    protected $table = 'billings';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];

@@ -14,10 +14,14 @@ Route::group([
     ),
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+
+    Route::get('activity/setStatusInProgress/{activityId}', ['as' => 'setStatusInProgress', 'uses' => 'ActivityActionsController@setStatusInProgress']);
+
+
     Route::crud('university', 'UniversityCrudController');
     Route::crud('student', 'StudentCrudController');
     Route::crud('subject', 'SubjectCrudController');
     Route::crud('activity', 'ActivityCrudController');
-    Route::crud('charge', 'ChargeCrudController');
+    Route::crud('billing', 'BillingCrudController');
     Route::crud('payment', 'PaymentCrudController');
 }); // this should be the absolute last line of this file

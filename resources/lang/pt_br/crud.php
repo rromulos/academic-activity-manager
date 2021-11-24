@@ -216,6 +216,11 @@ return [
     'charges' => 'cobranças',
     'charge' => 'cobrança',
 
+    'Billings' => 'Cobranças',
+    'Billing' => 'Cobrança',
+    'billings' => 'cobranças',
+    'billing' => 'cobrança',
+
     'Payments' => 'Pagamentos',
     'Payment' => 'Pagamento',
     'payments' => 'pagamentos',

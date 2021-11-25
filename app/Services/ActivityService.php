@@ -16,6 +16,8 @@ class ActivityService implements ActivityServiceInterface
 
     public const ACTIVITY_CANNOT_BE_FINISHED_INVALID_STATUS = 'ACTIVITY_CANNOT_BE_FINISHED_INVALID_STATUS';
     public const ACTIVITY_FINISHED = 'ACTIVITY_FINISHED';
+    public const ACTIVITY_STATUS_UPDATED = 'ACTIVITY_STATUS_UPDATED';
+    public const ACTIVITY_STATUS_NOT_UPDATED = 'ACTIVITY_STATUS_NOT_UPDATED';
 
     public function __construct(BillingServiceInterface $billingService,
                                 ActivityRepositoryInterface $activityRepository)
@@ -77,6 +79,18 @@ class ActivityService implements ActivityServiceInterface
      */
     public function setStatus($id, $status) :stdClass
     {
-        // TODO: Implement setStatus() method.
+        $result = new stdClass();
+        $activity = $this->activityRepository->getById($id);
+        $activity->status = $status;
+        if($activity->save()){
+            $result->status =  config('status.status.OK');
+            $result->code = self::ACTIVITY_STATUS_UPDATED;
+            $result->message = trans('backpack::activity.activity_status_updated');
+            return $result;
+        }
+        $result->status =  config('status.status.NOK');
+        $result->code = self::ACTIVITY_STATUS_NOT_UPDATED;
+        $result->message = trans('backpack::activity.activity_status_not_updated');
+        return $result;
     }
 }

@@ -20,7 +20,7 @@ class CreateActivitiesTable extends Migration
             $table->string('delivery_date',10)->comment = "Delivery Date of the activity";
             $table->text('observation')->nullable()->comment = "Observation of the activity";
             $table->decimal('price',10,2)->nullable()->comment = "Price of the activity";
-            $table->string('status',20)->default(config('status.status.AGUARDANDO'))->comment = "Status of the activity";
+            $table->string('status',20)->default(config('status.activityStatus.WAITING'))->comment = "Status of the activity";
             $table->timestamps();
         });
     }

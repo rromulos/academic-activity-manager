@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\ActivityServiceInterface;
-use Log;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class ActivityActionsController extends Controller {
 
@@ -22,7 +22,7 @@ class ActivityActionsController extends Controller {
 
     /**
      * Invoke service to update the activity status
-     * @param $id
+     * @param $activityId
      */
     public function setStatusInProgress($activityId)
     {

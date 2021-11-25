@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Activity;
+use App\Repositories\Interfaces\ActivityRepositoryInterface;
 
 class ActivityRepository extends AbstractBaseRepository implements ActivityRepositoryInterface {
 

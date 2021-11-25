@@ -23,6 +23,7 @@ class ActivityActionsController extends Controller {
     /**
      * Invoke service to update the activity status
      * @param $activityId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void
      */
     public function setStatusInProgress($activityId)
     {
@@ -31,13 +32,13 @@ class ActivityActionsController extends Controller {
             $return = $this->activityService->setStatus($activityId, config('status.activityStatus.IN_PROGRESS'));
             if($return->status === config('status.status.OK')){
                 DB::commit();
-                \Alert::error(trans('backpack::activity.activity_status_updated_successfully'))->flash();
-                return;
+                \Alert::success(trans('backpack::activity.activity_status_updated_successfully'))->flash();
+                return redirect('admin/activity');
             }
         } catch (Exception $e) {
             \Alert::error(trans('backpack::activity.activity_status_error_to_update'))->flash();
             DB::rollBack();
-            return;
+            return redirect('admin/activity');
         }
     }
 }

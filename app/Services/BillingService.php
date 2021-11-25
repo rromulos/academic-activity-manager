@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\BillingRepositoryInterface;
 use App\Services\Interfaces\BillingServiceInterface;
-use Log;
 
 class BillingService implements BillingServiceInterface {
 

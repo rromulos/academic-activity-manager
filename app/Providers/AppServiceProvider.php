@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Interfaces\ActivityServiceInterface;
-use App\Services\ActivityService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,16 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /**
-         * Services
-         */
-        //$this->app->singleton('App\Services\Interfaces\ActivityServiceInterface', 'App\Services\ActivityService');
-        $this->app->singleton(ActivityServiceInterface::class, ActivityService::class);
 
-        /**
-         * Repositories
-         */
+        $this->app->singleton('App\Services\Interfaces\ActivityServiceInterface', 'App\Services\ActivityService');
+        $this->app->singleton('App\Services\Interfaces\BillingServiceInterface', 'App\Services\BillingService');
+
         $this->app->bind('App\Repositories\Interfaces\ActivityRepositoryInterface','App\Repositories\ActivityRepository');
+        $this->app->bind('App\Repositories\Interfaces\BillingRepositoryInterface', 'App\Repositories\BillingRepository');
     }
 
     /**

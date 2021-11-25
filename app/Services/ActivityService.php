@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\Interfaces\ActivityRepositoryInterface;
+use App\Repositories\Interfaces\ActivityRepositoryInterface;
 use App\Services\Interfaces\ActivityServiceInterface;
 use App\Services\Interfaces\BillingServiceInterface;
 use Illuminate\Support\Facades\Log;

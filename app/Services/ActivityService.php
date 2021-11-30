@@ -90,9 +90,11 @@ class ActivityService implements ActivityServiceInterface
     public function setStatus($id, $status) :stdClass
     {
         $result = new stdClass();
-        $statusClass = $this->loadStatusClass($status);
+        $activity = $this->activityRepository->getById($id);
+        $statusClass = $this->loadStatusClass($activity->status);
+        Log::info(__METHOD__." trying to set the activity status to = ".$status);
         if($this->checkStatusMayBeUpdate($status, $statusClass)){
-            $activity = $this->activityRepository->getById($id);
+            Log::info(__METHOD__." status is valid to be updated");
             $activity->status = $status;
             if($activity->save()){
                 $result->status =  config('status.status.OK');
@@ -105,6 +107,7 @@ class ActivityService implements ActivityServiceInterface
             $result->message = trans('backpack::activity.activity_status_not_updated');
             return $result;
         }else{
+            Log::info(__METHOD__." status IS NOT valid to be updated");
             $result->status = config('status.status.NOK');
             $result->code = self::ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE;
             $result->message = trans('backpack::activity.activitiy_status_not_allowed_to_change');

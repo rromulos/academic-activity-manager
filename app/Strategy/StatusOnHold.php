@@ -15,6 +15,6 @@ class StatusOnHold implements StatusChangeValidator
             config('status.activityStatus.IN_PROGRESS'),
             config('status.activityStatus.DELIVERED'),
         ];
-        return (in_array($status, $validStatus, true)) ? true : false;
+        return (in_array($status, $validStatus)) ? true : false;
     }
 }

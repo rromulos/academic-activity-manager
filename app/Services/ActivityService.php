@@ -5,9 +5,15 @@ namespace App\Services;
 use App\Repositories\Interfaces\ActivityRepositoryInterface;
 use App\Services\Interfaces\ActivityServiceInterface;
 use App\Services\Interfaces\BillingServiceInterface;
-use App\Strategy\Interfaces\StatusCalculatorStrategyInterface;
+use App\Strategy\Interfaces\StatusChangeValidator;
+use App\Strategy\StatusBilling;
+use App\Strategy\StatusCanceled;
+use App\Strategy\StatusDelivered;
+use App\Strategy\StatusFinished;
 use App\Strategy\StatusInProgress;
 use App\Strategy\StatusOnHold;
+use App\Strategy\StatusPaid;
+use App\Strategy\StatusWaiting;
 use Illuminate\Support\Facades\Log;
 use stdClass;
 
@@ -21,6 +27,7 @@ class ActivityService implements ActivityServiceInterface
     public const ACTIVITY_FINISHED = 'ACTIVITY_FINISHED';
     public const ACTIVITY_STATUS_UPDATED = 'ACTIVITY_STATUS_UPDATED';
     public const ACTIVITY_STATUS_NOT_UPDATED = 'ACTIVITY_STATUS_NOT_UPDATED';
+    public const ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE = 'ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE';
 
     public function __construct(BillingServiceInterface $billingService,
                                 ActivityRepositoryInterface $activityRepository)
@@ -84,31 +91,44 @@ class ActivityService implements ActivityServiceInterface
     {
         $result = new stdClass();
         $statusClass = $this->loadStatusClass($status);
-        $this->checkStatusMayBeUpdate($status, $statusClass);
-        $activity = $this->activityRepository->getById($id);
-        $activity->status = $status;
-        if($activity->save()){
-            $result->status =  config('status.status.OK');
-            $result->code = self::ACTIVITY_STATUS_UPDATED;
-            $result->message = trans('backpack::activity.activity_status_updated');
+        if($this->checkStatusMayBeUpdate($status, $statusClass)){
+            $activity = $this->activityRepository->getById($id);
+            $activity->status = $status;
+            if($activity->save()){
+                $result->status =  config('status.status.OK');
+                $result->code = self::ACTIVITY_STATUS_UPDATED;
+                $result->message = trans('backpack::activity.activity_status_updated');
+                return $result;
+            }
+            $result->status =  config('status.status.NOK');
+            $result->code = self::ACTIVITY_STATUS_NOT_UPDATED;
+            $result->message = trans('backpack::activity.activity_status_not_updated');
+            return $result;
+        }else{
+            $result->status = config('status.status.NOK');
+            $result->code = self::ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE;
+            $result->message = trans('backpack::activity.activitiy_status_not_allowed_to_change');
             return $result;
         }
-        $result->status =  config('status.status.NOK');
-        $result->code = self::ACTIVITY_STATUS_NOT_UPDATED;
-        $result->message = trans('backpack::activity.activity_status_not_updated');
-        return $result;
     }
 
     /**
      * Load the coherent status class based on the status parameter
+     *
      * @param $status
      * @return mixed
      */
-    private function loadStatusClass($status)
+    private function loadStatusClass($status) :StatusChangeValidator
     {
         $statusArray = [
+            config('status.activityStatus.WAITING') => StatusWaiting::class,
             config('status.activityStatus.IN_PROGRESS') => StatusInProgress::class,
             config('status.activityStatus.ON_HOLD') => StatusOnHold::class,
+            config('status.activityStatus.DELIVERED') => StatusDelivered::class,
+            config('status.activityStatus.BILLING') => StatusBilling::class,
+            config('status.activityStatus.PAID') => StatusPaid::class,
+            config('status.activityStatus.FINISHED') => StatusFinished::class,
+            config('status.activityStatus.CANCELED') => StatusCanceled::class
         ];
         return new $statusArray[$status];
     }
@@ -117,10 +137,10 @@ class ActivityService implements ActivityServiceInterface
      * Checks if the status may be updated
      *
      * @param $status
-     * @param StatusCalculatorStrategyInterface $statusCalculator
+     * @param StatusChangeValidator $statusCalculator
      * @return bool
      */
-    private function checkStatusMayBeUpdate($status, StatusCalculatorStrategyInterface $statusCalculator) :bool
+    private function checkStatusMayBeUpdate($status, StatusChangeValidator $statusCalculator) :bool
     {
         return $statusCalculator->checkStatusMayBeUpdated($status);
     }

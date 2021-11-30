@@ -2,13 +2,16 @@
 
 namespace App\Strategy;
 
-use App\Strategy\Interfaces\StatusCalculatorStrategyInterface;
+use App\Strategy\Interfaces\StatusChangeValidator;
 
-class StatusFinished implements StatusCalculatorStrategyInterface
+class StatusFinished implements StatusChangeValidator
 {
 
     public function checkStatusMayBeUpdated($status) :bool
     {
-        return true;
+        $validStatus = [
+            config('status.activityStatus.PAID'),
+        ];
+        return (in_array($status, $validStatus, true)) ? true : false;
     }
 }

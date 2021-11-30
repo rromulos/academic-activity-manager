@@ -66,8 +66,14 @@
                                 </a>
                             </span>
                         </div>
-                        <div class="div-table-col"><span><img src="{{ asset('icons/pause.png') }}" height="48"
-                                                              width="48"> <p>Pausar</p></span></div>
+                        <div class="div-table-col">
+                            <span>
+                                <a href="activity/setStatusOnHold/{{$entry->getKey()}}">
+                                    <img src="{{ asset('icons/pause.png') }}" height="48" width="48">
+                                    <p>Pausar</p>
+                                </a>
+                            </span>
+                        </div>
                         <div class="div-table-col"><span><img src="{{ asset('icons/delivery-box.png') }}" height="48"
                                                               width="48"> <p>Entregar</p></span></div>
                         <div class="div-table-col"><span><img src="{{ asset('icons/paid.png') }}" height="48"

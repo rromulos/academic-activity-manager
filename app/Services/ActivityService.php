@@ -5,6 +5,9 @@ namespace App\Services;
 use App\Repositories\Interfaces\ActivityRepositoryInterface;
 use App\Services\Interfaces\ActivityServiceInterface;
 use App\Services\Interfaces\BillingServiceInterface;
+use App\Strategy\Interfaces\StatusCalculatorStrategyInterface;
+use App\Strategy\StatusInProgress;
+use App\Strategy\StatusOnHold;
 use Illuminate\Support\Facades\Log;
 use stdClass;
 
@@ -80,6 +83,8 @@ class ActivityService implements ActivityServiceInterface
     public function setStatus($id, $status) :stdClass
     {
         $result = new stdClass();
+        $statusClass = $this->loadStatusClass($status);
+        $this->checkStatusMayBeUpdate($status, $statusClass);
         $activity = $this->activityRepository->getById($id);
         $activity->status = $status;
         if($activity->save()){
@@ -92,5 +97,31 @@ class ActivityService implements ActivityServiceInterface
         $result->code = self::ACTIVITY_STATUS_NOT_UPDATED;
         $result->message = trans('backpack::activity.activity_status_not_updated');
         return $result;
+    }
+
+    /**
+     * Load the coherent status class based on the status parameter
+     * @param $status
+     * @return mixed
+     */
+    private function loadStatusClass($status)
+    {
+        $statusArray = [
+            config('status.activityStatus.IN_PROGRESS') => StatusInProgress::class,
+            config('status.activityStatus.ON_HOLD') => StatusOnHold::class,
+        ];
+        return new $statusArray[$status];
+    }
+
+    /**
+     * Checks if the status may be updated
+     *
+     * @param $status
+     * @param StatusCalculatorStrategyInterface $statusCalculator
+     * @return bool
+     */
+    private function checkStatusMayBeUpdate($status, StatusCalculatorStrategyInterface $statusCalculator) :bool
+    {
+        return $statusCalculator->checkStatusMayBeUpdated($status);
     }
 }

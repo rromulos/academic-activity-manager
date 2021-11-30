@@ -41,4 +41,21 @@ class ActivityActionsController extends Controller {
             return redirect('admin/activity');
         }
     }
+
+    public function setStatusOnHold($activityId)
+    {
+        try{
+            DB::beginTransaction();
+            $return = $this->activityService->setStatus($activityId, config('status.activityStatus.ON_HOLD'));
+            if($return->status === config('status.status.OK')){
+                DB::commit();
+                \Alert::success(trans('backpack::activity.activity_status_updated_successfully'))->flash();
+                return redirect('admin/activity');
+            }
+        } catch (Exception $e) {
+            \Alert::error(trans('backpack::activity.activity_status_error_to_update'))->flash();
+            DB::rollBack();
+            return redirect('admin/activity');
+        }
+    }
 }

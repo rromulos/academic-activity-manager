@@ -2,12 +2,17 @@
 
 namespace App\Strategy;
 
-use App\Strategy\Interfaces\StatusCalculatorStrategyInterface;
+use App\Strategy\Interfaces\StatusChangeValidator;
 
-class StatusInProgress implements StatusCalculatorStrategyInterface
+class StatusInProgress implements StatusChangeValidator
 {
     public function checkStatusMayBeUpdated($status) :bool
     {
-        return true;
+        $validStatus = [
+            config('status.activityStatus.WAITING'),
+            config('status.activityStatus.ON_HOLD'),
+            config('status.activityStatus.DELIVERED'),
+        ];
+        return (in_array($status, $validStatus, true)) ? true : false;
     }
 }

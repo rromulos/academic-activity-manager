@@ -2,7 +2,7 @@
 
 namespace App\Strategy\Interfaces;
 
-interface StatusCalculatorStrategyInterface
+interface StatusChangeValidator
 {
     public function checkStatusMayBeUpdated($status);
 }

@@ -55,12 +55,16 @@
                     <div class="div-table-row" style="margin-top: 10px">
                         <p><b>Ações da atividade</b></p>
                         <div class="div-table-col">
-                            <span><img src="{{ asset('icons/waiting.png') }}"
-                                                              href="og/execute/{{$entry->getKey()}}" height="48"
-                                                              width="48"> <p>Aguardando</p></span></div>
+                            <span>
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.ActivityStatus.WAITING')}}">
+                                <img src="{{ asset('icons/waiting.png') }}" height="48" width="48">
+                                <p>Aguardando</p>
+                                </a>
+                            </span>
+                        </div>
                         <div class="div-table-col">
                             <span>
-                                <a href="activity/setStatusInProgress/{{$entry->getKey()}}">
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.ActivityStatus.IN_PROGRESS')}}">
                                     <img src="{{ asset('icons/gear.png') }}" height="48" width="48">
                                     <p>Iniciar</p>
                                 </a>
@@ -68,20 +72,44 @@
                         </div>
                         <div class="div-table-col">
                             <span>
-                                <a href="activity/setStatusOnHold/{{$entry->getKey()}}">
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.ON_HOLD')}}">
                                     <img src="{{ asset('icons/pause.png') }}" height="48" width="48">
                                     <p>Pausar</p>
                                 </a>
                             </span>
                         </div>
-                        <div class="div-table-col"><span><img src="{{ asset('icons/delivery-box.png') }}" height="48"
-                                                              width="48"> <p>Entregar</p></span></div>
-                        <div class="div-table-col"><span><img src="{{ asset('icons/paid.png') }}" height="48"
-                                                              width="48"> <p>Pago</p></span></div>
-                        <div class="div-table-col"><span><img src="{{ asset('icons/flag.png') }}" height="48"
-                                                              width="48"> <p>Finalizado</p></span></div>
-                        <div class="div-table-col"><span><img src="{{ asset('icons/delete.png') }}" height="48"
-                                                              width="48"> <p>Cancelado</p></span></div>
+                        <div class="div-table-col">
+                            <span>
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.DELIVERED')}}">
+                                <img src="{{ asset('icons/delivery-box.png') }}" height="48" width="48">
+                                <p>Entregar</p>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="div-table-col">
+                            <span>
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.PAID')}}">
+                                <img src="{{ asset('icons/paid.png') }}" height="48" width="48">
+                                <p>Pago</p>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="div-table-col">
+                            <span>
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.FINISHED')}}">
+                                <img src="{{ asset('icons/flag.png') }}" height="48" width="48">
+                                <p>Finalizado</p>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="div-table-col">
+                            <span>
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.CANCELED')}}">
+                                <img src="{{ asset('icons/delete.png') }}" height="48" width="48">
+                                <p>Cancelado</p>
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
 

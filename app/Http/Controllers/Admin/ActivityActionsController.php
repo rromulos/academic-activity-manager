@@ -22,36 +22,23 @@ class ActivityActionsController extends Controller {
 
     /**
      * Invoke service to update the activity status
+     *
      * @param $activityId
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function setStatusInProgress($activityId)
+    public function setStatus($activityId, $status)
     {
         try{
             DB::beginTransaction();
-            $return = $this->activityService->setStatus($activityId, config('status.activityStatus.IN_PROGRESS'));
+            $return = $this->activityService->setStatus($activityId, $status);
             if($return->status === config('status.status.OK')){
                 DB::commit();
                 \Alert::success(trans('backpack::activity.activity_status_updated_successfully'))->flash();
                 return redirect('admin/activity');
             }
-        } catch (Exception $e) {
-            \Alert::error(trans('backpack::activity.activity_status_error_to_update'))->flash();
-            DB::rollBack();
+            DB::Rollback();
+            \Alert::error(trans('backpack::activity.activitiy_status_not_allowed_to_change'))->flash();
             return redirect('admin/activity');
-        }
-    }
-
-    public function setStatusOnHold($activityId)
-    {
-        try{
-            DB::beginTransaction();
-            $return = $this->activityService->setStatus($activityId, config('status.activityStatus.ON_HOLD'));
-            if($return->status === config('status.status.OK')){
-                DB::commit();
-                \Alert::success(trans('backpack::activity.activity_status_updated_successfully'))->flash();
-                return redirect('admin/activity');
-            }
         } catch (Exception $e) {
             \Alert::error(trans('backpack::activity.activity_status_error_to_update'))->flash();
             DB::rollBack();

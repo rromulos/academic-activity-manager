@@ -15,9 +15,7 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
 
-    Route::get('activity/setStatusInProgress/{activityId}', ['as' => 'setStatusInProgress', 'uses' => 'ActivityActionsController@setStatusInProgress']);
-    Route::get('activity/setStatusOnHold/{activityId}', ['as' => 'setStatusOnHold', 'uses' => 'ActivityActionsController@setStatusOnHold']);
-
+    Route::get('activity/setStatus/{activityId}/{status}', ['as' => 'setStatus', 'uses' => 'ActivityActionsController@setStatus']);
 
     Route::crud('university', 'UniversityCrudController');
     Route::crud('student', 'StudentCrudController');

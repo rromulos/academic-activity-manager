@@ -56,7 +56,7 @@
                         <p><b>Ações da atividade</b></p>
                         <div class="div-table-col">
                             <span>
-                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.ActivityStatus.WAITING')}}">
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.WAITING')}}">
                                 <img src="{{ asset('icons/waiting.png') }}" height="48" width="48">
                                 <p>Aguardando</p>
                                 </a>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="div-table-col">
                             <span>
-                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.ActivityStatus.IN_PROGRESS')}}">
+                                <a href="activity/setStatus/{{$entry->getKey()}}/{{config('status.activityStatus.IN_PROGRESS')}}">
                                     <img src="{{ asset('icons/gear.png') }}" height="48" width="48">
                                     <p>Iniciar</p>
                                 </a>

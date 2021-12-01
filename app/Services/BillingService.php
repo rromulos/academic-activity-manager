@@ -14,8 +14,8 @@ class BillingService implements BillingServiceInterface {
         $this->billingRepository = $billingRepository;
     }
 
-    public function generateCharge($activityId)
+    public function generateBilling($activityId)
     {
-
+        // TODO: Implement generateBilling() method.
     }
 }

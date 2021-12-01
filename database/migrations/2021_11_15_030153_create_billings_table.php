@@ -15,7 +15,8 @@ class CreateBillingsTable extends Migration
         Schema::create('billings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('activity_id')->unsigned()->comment = "";
-            $table->string('status',20)->default(config('status.status.AGUARDANDO'));
+            $table->string('status',20)->default(config('status.activityStatus.WAITING'));
+            $table->decimal('price',10,2)->nullable()->comment = "Billings price";
 
             $table->timestamps();
         });

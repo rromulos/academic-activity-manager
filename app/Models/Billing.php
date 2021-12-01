@@ -19,7 +19,7 @@ class Billing extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['activity_id', 'status', 'price'];
     // protected $hidden = [];
     // protected $dates = [];
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\BillingEvent;
 use App\Repositories\Interfaces\ActivityRepositoryInterface;
 use App\Services\Interfaces\ActivityServiceInterface;
 use App\Services\Interfaces\BillingServiceInterface;
@@ -27,7 +28,9 @@ class ActivityService implements ActivityServiceInterface
     public const ACTIVITY_FINISHED = 'ACTIVITY_FINISHED';
     public const ACTIVITY_STATUS_UPDATED = 'ACTIVITY_STATUS_UPDATED';
     public const ACTIVITY_STATUS_NOT_UPDATED = 'ACTIVITY_STATUS_NOT_UPDATED';
-    public const ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE = 'ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE';
+    public const ACTIVITY_STATUS_NOT_ALLOWED_TO_UPDATE = 'ACTIVITY_STATUS_NOT_ALLOWED_TO_UPDATE';
+    public const ACTIVITY_CANNOT_BE_BILLED_PRICE_FIELD_EMPTY = 'ACTIVITY_CANNOT_BE_BILLED_PRICE_FIELD_EMPTY';
+    public const ACTIVITY_CAN_BE_BILLED = 'ACTIVITY_CAN_BE_BILLED';
 
     public function __construct(BillingServiceInterface $billingService,
                                 ActivityRepositoryInterface $activityRepository)
@@ -86,6 +89,7 @@ class ActivityService implements ActivityServiceInterface
      * @param $id
      * @param $status
      * @return stdClass
+     * @TODO too much if conditions
      */
     public function setStatus($id, $status) :stdClass
     {
@@ -100,19 +104,24 @@ class ActivityService implements ActivityServiceInterface
                 $result->status =  config('status.status.OK');
                 $result->code = self::ACTIVITY_STATUS_UPDATED;
                 $result->message = trans('backpack::activity.activity_status_updated');
+                $check = $this->checksActivityCanBeBilled($activity, $status);
+                if($check->status === config('status.status.NOK')){
+                    return $check;
+                }else{
+                    BillingEvent::dispatch();
+                }
                 return $result;
             }
             $result->status =  config('status.status.NOK');
             $result->code = self::ACTIVITY_STATUS_NOT_UPDATED;
             $result->message = trans('backpack::activity.activity_status_not_updated');
             return $result;
-        }else{
-            Log::info(__METHOD__." status IS NOT valid to be updated");
-            $result->status = config('status.status.NOK');
-            $result->code = self::ACTIVITIy_STATUS_NOT_ALLOWED_TO_UPDATE;
-            $result->message = trans('backpack::activity.activitiy_status_not_allowed_to_change');
-            return $result;
         }
+        Log::info(__METHOD__." status IS NOT valid to be updated");
+        $result->status = config('status.status.NOK');
+        $result->code = self::ACTIVITY_STATUS_NOT_ALLOWED_TO_UPDATE;
+        $result->message = trans('backpack::activity.activity_status_not_allowed_to_change');
+        return $result;
     }
 
     /**
@@ -146,5 +155,28 @@ class ActivityService implements ActivityServiceInterface
     private function checkStatusMayBeUpdate($status, StatusChangeValidator $statusCalculator) :bool
     {
         return $statusCalculator->checkStatusMayBeUpdated($status);
+    }
+
+    /**
+     * Checks if the activity can be billed.
+     *
+     * @param $activity
+     * @param $status
+     * @return stdClass
+     */
+    private function checksActivityCanBeBilled($activity, $status) :stdClass
+    {
+        $result = new stdClass();
+        if($status === config('status.activityStatus.BILLING')){
+            if (!is_null($activity->price)) {
+                $result->status = config('status.status.NOK');
+                $result->code = self::ACTIVITY_CANNOT_BE_BILLED_PRICE_FIELD_EMPTY;
+                $result->message = trans('backpack::activity.activity_cannot_be_billed_price_field_empty');
+                return $result;
+            }
+            $result->status = config('status.status.OK');
+            $result->code = self::ACTIVITY_CAN_BE_BILLED;
+            return $result;
+        }
     }
 }

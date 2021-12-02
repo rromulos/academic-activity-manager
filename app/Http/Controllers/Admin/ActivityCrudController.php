@@ -190,8 +190,8 @@ class ActivityCrudController extends CrudController
             ],
             'tab' => trans('backpack::crud.tab.basic'),
             'options'     => [
-                'AGUARDANDO' => 'AGUARDANDO',
-                'EM_ANDAMENTO' => 'EM ANDAMENTO',
+                config('status.activityStatus.WAITING') => 'AGUARDANDO',
+                config('status.activityStatus.IN_PROGRESS') => 'EM ANDAMENTO',
             ],
             'allows_null' => false,
             'default'     => 'AGUARDANDO',

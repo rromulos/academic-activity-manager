@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\BillingRepositoryInterface;
 use App\Services\Interfaces\BillingServiceInterface;
+use Log;
 
 class BillingService implements BillingServiceInterface {
 
@@ -16,6 +17,6 @@ class BillingService implements BillingServiceInterface {
 
     public function generateBilling($activityId)
     {
-        // TODO: Implement generateBilling() method.
+        $billing = $this->billingRepository->getBilingByActivityId($activityId);
     }
 }
